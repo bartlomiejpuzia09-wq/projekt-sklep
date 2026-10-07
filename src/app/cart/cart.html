@@ -1,0 +1,17 @@
+<h2>KOSZYK</h2>
+
+@if (cart.length === 0) {
+  <p>Koszyk jest pusty.</p>
+} @else {
+
+  @for (product of cart; track $index) {
+    <p>
+      {{ product.name }} {{ product.price }} zł
+      <button (click)="removeProduct(product.id)">Usuń</button>
+    </p>
+  }
+
+  <hr>
+
+  <p>RAZEM {{ getTotal() }} zł</p>
+}
