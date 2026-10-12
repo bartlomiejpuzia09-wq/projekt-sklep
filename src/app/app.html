@@ -1,13 +1,8 @@
+<app-header> </app-header>
+
+<router-outlet> </router-outlet>
 <h1>Sklep</h1>
 
-<app-product-list
-  [products]="products"
-  (add)="addToCart($event)">
-</app-product-list>
+<app-product-list [products]="products" (addToCart)="addToCart($event)"> </app-product-list>
 
-<hr>
-
-<app-cart
-  [cart]="cart"
-  (remove)="removeFromCart($event)">
-</app-cart>
+<hr />

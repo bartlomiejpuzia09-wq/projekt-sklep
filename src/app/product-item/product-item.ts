@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   template: `
     <p>
       {{ product.name }} - {{ product.price }} zł
-      <button (click)="onAddToCart()">Dodaj do koszyka</button>
+      <button (click)="onAddToCart(this.product)">Dodaj do koszyka</button>
     </p>
   `
 })
@@ -14,7 +14,7 @@ export class ProductItemComponent {
   @Input() product: any;
   @Output() addToCart = new EventEmitter<any>();
 
-  onAddToCart(){
-    this.addToCart.emit(this.product);
+  onAddToCart(product : any){
+    this.addToCart.emit(product);
   }
 }
