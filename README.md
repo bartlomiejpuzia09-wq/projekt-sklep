@@ -1,59 +1,30 @@
-# ProjektSklep
+# Patch do projektu Angular — SklepIT
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.1.
+Zawartość tego folderu należy skopiować do istniejącego projektu, zachowując strukturę `src/app`. Pliki o tych samych ścieżkach zastępują aktualne wersje; pozostałe są nowe.
 
-## Development server
+## Co zawiera patch
 
-To start a local development server, run:
+- Routing z lazy loading (`loadComponent`) dla strony głównej, strony produktu, koszyka, płatności, podsumowania zamówienia i strony 404.
+- Naprawę zapętlenia trasy głównej: `AppComponent` jest szkieletem aplikacji, a trasa `''` ładuje stronę listy produktów.
+- Wspólny `ShopService` z jednym stanem koszyka i danymi zamówienia.
+- Ten sam `CartComponent` używany jako strona `/cart` i wysuwany modal z nagłówka.
+- Przyciski `+` i `−`, usuwanie pozycji po zejściu do zera oraz aktualizację sumy.
+- Stronę szczegółów produktu z powiększeniem zdjęcia po najechaniu kursorem i prostą karuzelą pozostałych produktów.
+- Reactive Forms, walidację adresu/e-maila/kodu BLIK lub numeru karty oraz warunkowe pola płatności.
+- Symulowany błąd przy około 10% prób złożenia zamówienia. Przy błędzie koszyk nie jest czyszczony.
+- Przekierowanie po udanym złożeniu zamówienia do `/order-summary`.
 
-```bash
-ng serve
-```
+## Jak wgrać
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. Zrób kopię zapasową folderu `src/app`.
+2. Skopiuj zawartość folderu `src/app` z tej paczki do `src/app` w swoim projekcie, zezwalając na zastąpienie plików o tych samych nazwach.
+3. Upewnij się, że `src/app/app.config.ts` nadal używa `provideRouter(routes)` z `./app.routes` (zwykle nie trzeba go zmieniać).
+4. W terminalu uruchom `npm install`, a następnie `ng serve`.
+5. Sprawdź adresy `/`, `/product/keyboard`, `/cart`, `/payment` i `/order-summary`.
 
-## Code scaffolding
+## Ważne uwagi
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Kod zakłada samodzielne komponenty Angular (`standalone`) i obsługę składni `@if`/`@for` (Angular 17+).
+- Efekt zoomu i karuzela są napisane bez dodatkowych zależności, żeby nie wprowadzać konfliktu wersji. W npm istnieją m.in. `ngx-owl-carousel-o` i `@ngu/carousel`, ale wersję biblioteki należy dobrać do wersji Angulara w `package.json`. `ngx-image-zoom` jest starszym pakietem i jego opis podaje testy dla Angulara 15, więc nie został automatycznie dodany.
+- To demonstracja szkolna — nie integruje prawdziwej bramki płatniczej ani nie wysyła danych na serwer. Nie wpisuj prawdziwych danych karty ani kodów BLIK.
+- Nie mogłem uruchomić kompilacji w Twoim repozytorium, ponieważ w tym środowisku nie udało się pobrać plików GitHuba. Po wgraniu patcha najważniejszy test to `ng serve`; jeśli kompilator zgłosi błąd, prześlij pełny komunikat.

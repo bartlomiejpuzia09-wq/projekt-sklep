@@ -1,24 +1,25 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
-import { ProductItemComponent } from '../product-item/product-item';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ShopService } from '../services/shop';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [ProductItemComponent],
-  template: `
-    <h2>Produkty</h2>
-    @for (p of products; track p.id) {
-      <app-product-item [product]="p" (addToCart)="addToCart.emit($event)"></app-product-item>
-    }
-  `,
+  imports: [RouterLink, DecimalPipe],
+  templateUrl: './product-list.html',
+  styleUrl: './product-list.scss',
 })
 export class ProductListComponent {
-  @Input() products: any[] = [];
-  @Output() addToCart = new EventEmitter<any>();
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  ngOnInit() {
-    this.router.navigateByUrl('/cart');
+  readonly shop = inject(ShopService);
+  readonly products = this.shop.products;
+  addedProductId = '';
+
+  addToCart(productId: string): void {
+    this.shop.addToCart(productId);
+    this.addedProductId = productId;
+    setTimeout(() => {
+      if (this.addedProductId === productId) this.addedProductId = '';
+    }, 1200);
   }
 }

@@ -1,0 +1,31 @@
+@if (product) {
+  <a class="back-link" routerLink="/">← Wróć do produktów</a>
+  <section class="product-detail">
+    <div class="product-image-wrap" tabindex="0" [attr.aria-label]="'Zdjęcie produktu ' + product.name + ', najedź kursorem aby powiększyć'">
+      <img class="product-image" [src]="product.image" [alt]="product.name" />
+      <span class="zoom-hint">Najedź, aby powiększyć</span>
+    </div>
+    <div class="details">
+      <p class="eyebrow">SZCZEGÓŁY PRODUKTU</p>
+      <h1>{{ product.name }}</h1>
+      <div class="rating"><span>★</span> {{ product.rating }}/5 <span class="review-count">({{ product.reviews }} opinii)</span></div>
+      <p class="description">{{ product.description }}</p>
+      <ul class="features">
+        <li>Produkt dostępny w magazynie</li>
+        <li>Bezpieczne pakowanie</li>
+        <li>14 dni na zwrot w ramach przykładowego sklepu</li>
+      </ul>
+      <div class="purchase-row"><strong>{{ product.price | number:'1.2-2' }} zł</strong><button type="button" (click)="addToCart()">{{ added ? 'Dodano do koszyka ✓' : 'Dodaj do koszyka' }}</button></div>
+      <a class="cart-link" routerLink="/cart">Przejdź do koszyka ({{ shop.cartCount() }})</a>
+    </div>
+  </section>
+
+  <section class="related">
+    <div class="related-heading"><div><p class="eyebrow">MOŻE CI SIĘ SPODOBAĆ</p><h2>Pozostałe produkty</h2></div><div class="carousel-controls"><button type="button" (click)="previous()" aria-label="Poprzednie produkty">←</button><button type="button" (click)="next()" aria-label="Następne produkty">→</button></div></div>
+    <div class="related-grid">
+      @for (item of visibleProducts; track item.id) {
+        <a class="related-card" [routerLink]="['/product', item.id]"><img [src]="item.image" [alt]="item.name" loading="lazy" /><div><h3>{{ item.name }}</h3><strong>{{ item.price | number:'1.2-2' }} zł</strong></div></a>
+      }
+    </div>
+  </section>
+}

@@ -1,0 +1,166 @@
+<div class="page-title">
+  <p class="eyebrow">OSTATNI KROK</p>
+  <h1>Dostawa i płatność</h1>
+  <p>
+    Wpisz dane do zamówienia. To demonstracyjny formularz — nie pobieramy prawdziwych płatności.
+  </p>
+</div>
+
+@if (shop.cart().length === 0) {
+  <section class="empty-notice">
+    <h2>Nie masz produktów w koszyku</h2>
+    <p>Dodaj coś do koszyka, aby przejść do płatności.</p>
+    <a routerLink="/" class="primary-button">Wróć do sklepu</a>
+  </section>
+} @else {
+  <div class="checkout-layout">
+    <form [formGroup]="paymentForm" (ngSubmit)="submitOrder()" novalidate>
+      <section class="form-card">
+        <h2>1. Dane kontaktowe</h2>
+        <div class="form-grid">
+          <label
+            >Imię<input formControlName="firstName" autocomplete="given-name" placeholder="Jan" />
+            @if (fieldInvalid('firstName')) {
+              <small>Podaj imię (minimum 2 znaki).</small>
+            }
+          </label>
+          <label
+            >Nazwisko<input
+              formControlName="lastName"
+              autocomplete="family-name"
+              placeholder="Kowalski"
+            />
+            @if (fieldInvalid('lastName')) {
+              <small>Podaj nazwisko (minimum 2 znaki).</small>
+            }
+          </label>
+          <label class="full-width"
+            >E-mail<input
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              placeholder="jan@example.com"
+            />
+            @if (fieldInvalid('email')) {
+              <small>Podaj poprawny adres e-mail.</small>
+            }
+          </label>
+        </div>
+      </section>
+
+      <section class="form-card">
+        <h2>2. Adres dostawy</h2>
+        <div class="form-grid">
+          <label class="full-width"
+            >Ulica i numer<input
+              formControlName="street"
+              autocomplete="street-address"
+              placeholder="ul. Przykładowa 12/3"
+            />
+            @if (fieldInvalid('street')) {
+              <small>Podaj adres (minimum 4 znaki).</small>
+            }
+          </label>
+          <label
+            >Kod pocztowy<input
+              formControlName="postalCode"
+              autocomplete="postal-code"
+              placeholder="00-001"
+            />
+            @if (fieldInvalid('postalCode')) {
+              <small>Format kodu: 00-000.</small>
+            }
+          </label>
+          <label
+            >Miasto<input
+              formControlName="city"
+              autocomplete="address-level2"
+              placeholder="Warszawa"
+            />
+            @if (fieldInvalid('city')) {
+              <small>Podaj nazwę miasta.</small>
+            }
+          </label>
+        </div>
+      </section>
+
+      <section class="form-card">
+        <h2>3. Forma płatności</h2>
+        <div class="payment-options">
+          <label class="payment-option"
+            ><input type="radio" formControlName="paymentMethod" value="blik" /><span
+              ><strong>BLIK</strong><small>Kod z aplikacji bankowej</small></span
+            ></label
+          >
+          <label class="payment-option"
+            ><input type="radio" formControlName="paymentMethod" value="card" /><span
+              ><strong>Karta płatnicza</strong><small>Numer karty — przykładowe pole</small></span
+            ></label
+          >
+          <label class="payment-option"
+            ><input type="radio" formControlName="paymentMethod" value="transfer" /><span
+              ><strong>Przelew tradycyjny</strong
+              ><small>Instrukcja pojawi się po zamówieniu</small></span
+            ></label
+          >
+        </div>
+        @if (paymentForm.controls.paymentMethod.value === 'blik') {
+          <label class="conditional-field"
+            >Kod BLIK<input
+              formControlName="blikCode"
+              inputmode="numeric"
+              maxlength="6"
+              placeholder="6 cyfr"
+              autocomplete="off"
+            />
+            @if (fieldInvalid('blikCode')) {
+              <small>Kod powinien składać się z 6 cyfr.</small>
+            }
+          </label>
+        }
+        @if (paymentForm.controls.paymentMethod.value === 'card') {
+          <label class="conditional-field"
+            >Numer karty<input
+              formControlName="cardNumber"
+              inputmode="numeric"
+              maxlength="19"
+              placeholder="0000 0000 0000 0000"
+              autocomplete="off"
+            />
+            @if (fieldInvalid('cardNumber')) {
+              <small>Wpisz numer składający się z 16 cyfr (spacje i myślniki są dozwolone).</small>
+            }
+          </label>
+        }
+        <p class="demo-warning">
+          Nie podawaj prawdziwego kodu BLIK ani prawdziwego numeru karty. Formularz służy wyłącznie
+          do testowania szkolnego projektu.
+        </p>
+      </section>
+
+      @if (submitError) {
+        <div class="error-message" role="alert">{{ submitError }}</div>
+      }
+      <button class="primary-button submit-button" type="submit" [disabled]="sending">
+        {{ sending ? 'Wysyłanie…' : 'Złóż zamówienie' }}
+      </button>
+    </form>
+
+    <aside class="summary-card">
+      <h2>Podsumowanie</h2>
+      @for (item of shop.cart(); track item.product.id) {
+        <div class="summary-item">
+          <div>
+            <strong>{{ item.product.name }}</strong
+            ><span>{{ item.quantity }} × {{ item.product.price | number: '1.2-2' }} zł</span>
+          </div>
+          <b>{{ item.quantity * item.product.price | number: '1.2-2' }} zł</b>
+        </div>
+      }
+      <div class="summary-total">
+        <span>Razem do zapłaty</span><strong>{{ shop.total() | number: '1.2-2' }} zł</strong>
+      </div>
+      <a class="edit-cart" routerLink="/cart">Zmień koszyk</a>
+    </aside>
+  </div>
+}

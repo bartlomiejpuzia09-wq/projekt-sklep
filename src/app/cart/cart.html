@@ -1,0 +1,67 @@
+<div class="cart-heading">
+  <div>
+    <p class="eyebrow">TWOJE ZAKUPY</p>
+    <h1>{{ modal ? 'Podgląd koszyka' : 'Koszyk' }}</h1>
+  </div>
+  @if (modal) {
+    <button type="button" class="close-button" aria-label="Zamknij koszyk" (click)="close()">
+      ×
+    </button>
+  }
+</div>
+
+@if (items.length === 0) {
+  <section class="empty-state">
+    <div class="empty-icon">🛒</div>
+    <h2>Twój koszyk jest pusty</h2>
+    <p>Dodaj produkt ze strony głównej, a pojawi się tutaj.</p>
+    <a class="primary-button" routerLink="/" (click)="close()">Przeglądaj produkty</a>
+  </section>
+} @else {
+  <div class="cart-items">
+    @for (item of items; track item.product.id) {
+      <article class="cart-item">
+        <div class="item-details">
+          <h2>{{ item.product.name }}</h2>
+          <p>{{ item.product.price | number: '1.2-2' }} zł / szt.</p>
+          <div class="quantity-control" [attr.aria-label]="'Ilość: ' + item.quantity">
+            <button
+              type="button"
+              [attr.aria-label]="'Zmniejsz ilość: ' + item.product.name"
+              (click)="decrease(item.product.id)"
+            >
+              −
+            </button>
+            <span>{{ item.quantity }}</span>
+            <button
+              type="button"
+              [attr.aria-label]="'Zwiększ ilość: ' + item.product.name"
+              (click)="increase(item.product.id)"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <strong class="item-total"
+          >{{ item.product.price * item.quantity | number: '1.2-2' }} zł</strong
+        >
+      </article>
+    }
+  </div>
+
+  <div class="cart-summary">
+    <div>
+      <span>Produkty</span><strong>{{ shop.cartCount() }} szt.</strong>
+    </div>
+    <div class="grand-total">
+      <span>Razem</span><strong>{{ total | number: '1.2-2' }} zł</strong>
+    </div>
+    @if (modal) {
+      <a class="secondary-button" routerLink="/cart" (click)="close()">Otwórz pełny koszyk</a>
+      <a class="primary-button" routerLink="/payment" (click)="close()">Przejdź do płatności</a>
+    } @else {
+      <a class="primary-button" routerLink="/payment">Przejdź do płatności</a>
+      <a class="continue-link" routerLink="/">Kontynuuj zakupy</a>
+    }
+  </div>
+}

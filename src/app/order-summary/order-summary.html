@@ -1,0 +1,24 @@
+@if (shop.lastOrder(); as order) {
+  <section class="success-card">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">ZAMÓWIENIE PRZYJĘTE</p>
+    <h1>Dziękujemy za zamówienie!</h1>
+    <p class="intro">To przykładowe potwierdzenie. Żadna prawdziwa płatność nie została wykonana.</p>
+    <div class="order-number"><span>Numer zamówienia</span><strong>{{ order.number }}</strong></div>
+
+    <div class="order-details">
+      <div><span>Odbiorca</span><strong>{{ order.customerName }}</strong></div>
+      <div><span>Adres dostawy</span><strong>{{ order.address }}</strong></div>
+      <div><span>E-mail</span><strong>{{ order.email }}</strong></div>
+      <div><span>Forma płatności</span><strong>{{ order.paymentMethod === 'blik' ? 'BLIK (symulacja)' : order.paymentMethod === 'card' ? 'Karta (symulacja)' : 'Przelew tradycyjny (symulacja)' }}</strong></div>
+      <div><span>Data</span><strong>{{ order.createdAt | date:'dd.MM.yyyy, HH:mm' }}</strong></div>
+    </div>
+
+    <h2>Produkty</h2>
+    @for (item of order.items; track item.product.id) {
+      <div class="order-item"><span>{{ item.product.name }} × {{ item.quantity }}</span><strong>{{ item.product.price * item.quantity | number:'1.2-2' }} zł</strong></div>
+    }
+    <div class="order-total"><span>Łącznie</span><strong>{{ order.total | number:'1.2-2' }} zł</strong></div>
+    <a class="primary-button" routerLink="/">Wróć do sklepu</a>
+  </section>
+}

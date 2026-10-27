@@ -1,0 +1,50 @@
+<section class="hero">
+  <div>
+    <p class="eyebrow">TECHNOLOGIA NA CO DZIEŃ</p>
+    <h1>Sprzęt, który ułatwia <span>pracę i naukę.</span></h1>
+    <p class="hero-copy">
+      Wybierz akcesoria komputerowe do swojego stanowiska. Zobacz szczegóły produktu i dodaj wybrane
+      rzeczy do koszyka.
+    </p>
+    <a class="primary-link" href="#produkty">Zobacz produkty</a>
+  </div>
+  <div class="hero-art" aria-hidden="true"><span>⌘</span><span>⌁</span><span>▣</span></div>
+</section>
+
+<section id="produkty" class="products-section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">NASZA OFERTA</p>
+      <h2>Popularne produkty</h2>
+    </div>
+    <p>{{ products.length }} produktów</p>
+  </div>
+  <div class="products-grid">
+    @for (product of products; track product.id) {
+      <article class="product-card">
+        <a
+          class="image-link"
+          [routerLink]="['/product', product.id]"
+          [attr.aria-label]="'Zobacz produkt: ' + product.name"
+        >
+        </a>
+        <div class="product-info">
+          <div class="rating">
+            <span>★</span> {{ product.rating }}
+            <span class="reviews">({{ product.reviews }} opinii)</span>
+          </div>
+          <h3>
+            <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+          </h3>
+          <p class="description">{{ product.description }}</p>
+          <div class="card-bottom">
+            <strong>{{ product.price | number: '1.2-2' }} zł</strong>
+            <button type="button" (click)="addToCart(product.id)">
+              {{ addedProductId === product.id ? 'Dodano ✓' : 'Dodaj +' }}
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

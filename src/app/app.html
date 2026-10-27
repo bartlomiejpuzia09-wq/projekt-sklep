@@ -1,8 +1,29 @@
-<app-header> </app-header>
+<header class="site-header">
+  <a class="brand" routerLink="/" (click)="closeCart()">Sklep<span>IT</span></a>
 
-<router-outlet> </router-outlet>
-<h1>Sklep</h1>
+  <nav aria-label="Nawigacja główna">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Strona główna</a>
+    <a routerLink="/cart" routerLinkActive="active">Koszyk</a>
+    <a routerLink="/payment" routerLinkActive="active">Płatność</a>
+  </nav>
 
-<app-product-list [products]="products" (addToCart)="addToCart($event)"> </app-product-list>
+  <button class="cart-trigger" type="button" (click)="openCart()">
+    Koszyk <span class="cart-count">{{ shop.cartCount() }}</span>
+  </button>
+</header>
 
-<hr />
+<main class="page-shell">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="site-footer">
+  <p>SklepIT — projekt demonstracyjny. Płatności nie są rzeczywiście przetwarzane.</p>
+</footer>
+
+@if (cartOpen) {
+  <div class="modal-backdrop" (click)="closeCart()">
+    <section class="cart-modal" role="dialog" aria-modal="true" aria-label="Podgląd koszyka" (click)="$event.stopPropagation()">
+      <ng-container #cartModalOutlet></ng-container>
+    </section>
+  </div>
+}

@@ -1,29 +1,45 @@
-import { Component, signal } from '@angular/core';
-import { ProductListComponent } from './product-list/product-list';
-import { RouterOutlet } from '@angular/router';
-import { Header } from './header/header';
+import { Component, ComponentRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ShopService } from './services/shop';
+import type { CartComponent } from './cart/cart';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ProductListComponent, RouterOutlet, Header],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
 export class AppComponent {
-  products = [
-    { id: 1, name: 'Klawiatura', price: 199 },
-    { id: 2, name: 'Mysz', price: 99 },
-    { id: 3, name: 'Monitor', price: 899 },
-    { id: 4, name: 'Słuchawki', price: 149 },
-  ];
+  readonly shop = inject(ShopService);
+  cartOpen = false;
+  private cartOutlet?: ViewContainerRef;
+  private cartModalRef?: ComponentRef<CartComponent>;
 
-  cart = signal<any[]>([]);
-
-  addToCart(product: any) {
-    this.cart.set([...this.cart(), product]);
+  @ViewChild('cartModalOutlet', { read: ViewContainerRef })
+  set cartModalOutlet(outlet: ViewContainerRef | undefined) {
+    this.cartOutlet = outlet;
+    if (outlet && this.cartOpen) void this.mountCart(outlet);
   }
 
-  removeFromCart(index: number) {
-    this.cart.update((cart) => cart.filter((_, i) => i !== index));
+  openCart(): void {
+    this.cartOpen = true;
+  }
+
+  closeCart(): void {
+    this.cartOpen = false;
+    this.cartModalRef?.destroy();
+    this.cartModalRef = undefined;
+    this.cartOutlet?.clear();
+  }
+
+  private async mountCart(outlet: ViewContainerRef): Promise<void> {
+    const { CartComponent } = await import('./cart/cart');
+    if (!this.cartOpen || this.cartOutlet !== outlet) return;
+    outlet.clear();
+    const component = outlet.createComponent(CartComponent);
+    this.cartModalRef = component;
+    component.setInput('modal', true);
+    component.instance.closed.subscribe(() => this.closeCart());
   }
 }
