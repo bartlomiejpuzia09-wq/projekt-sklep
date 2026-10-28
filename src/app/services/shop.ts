@@ -3,7 +3,7 @@ import { Injectable, computed, signal } from '@angular/core';
 export interface Product {
   id: string;
   name: string;
-  image: string;
+
   price: number;
   description: string;
   rating: number;
@@ -34,7 +34,7 @@ export class ShopService {
     {
       id: 'keyboard',
       name: 'Klawiatura mechaniczna',
-      image: 'monitor-z-plaskim-ekranem-na-bialym-tle_719385-1650.jpeg',
+
       price: 199,
       description:
         'Wygodna klawiatura do nauki, pracy i grania. Wyraźny skok klawiszy i solidna obudowa zapewniają komfort podczas długiego użytkowania.',
@@ -44,7 +44,6 @@ export class ShopService {
     {
       id: 'mouse',
       name: 'Mysz komputerowa',
-      image: '',
       price: 99,
       description:
         'Precyzyjna mysz o ergonomicznym kształcie. Sprawdzi się podczas codziennej pracy przy komputerze.',
@@ -54,17 +53,15 @@ export class ShopService {
     {
       id: 'monitor',
       name: 'Monitor 27 cali',
-      image: '',
       price: 899,
       description:
-        'Duży monitor z ostrym obrazem, który ułatwia wielozadaniową pracę i zapewnia wygodną przestrzeń roboczą.',
+        'Duży monitor z wyraźnym wyświetlaczem, który ułatwia wielozadaniową pracę i zapewnia wygodną przestrzeń roboczą.',
       rating: 4.8,
       reviews: 54,
     },
     {
       id: 'headphones',
       name: 'Słuchawki bezprzewodowe',
-      image: '',
       price: 149,
       description:
         'Wygodne słuchawki do muzyki, spotkań online i nauki. Miękkie nauszniki pomagają komfortowo korzystać z nich przez dłuższy czas.',

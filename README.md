@@ -9,7 +9,7 @@ Zawartość tego folderu należy skopiować do istniejącego projektu, zachowuj�
 - Wspólny `ShopService` z jednym stanem koszyka i danymi zamówienia.
 - Ten sam `CartComponent` używany jako strona `/cart` i wysuwany modal z nagłówka.
 - Przyciski `+` i `−`, usuwanie pozycji po zejściu do zera oraz aktualizację sumy.
-- Stronę szczegółów produktu z powiększeniem zdjęcia po najechaniu kursorem i prostą karuzelą pozostałych produktów.
+- Stronę szczegółów produktu z prostą karuzelą pozostałych produktów.
 - Reactive Forms, walidację adresu/e-maila/kodu BLIK lub numeru karty oraz warunkowe pola płatności.
 - Symulowany błąd przy około 10% prób złożenia zamówienia. Przy błędzie koszyk nie jest czyszczony.
 - Przekierowanie po udanym złożeniu zamówienia do `/order-summary`.
@@ -25,6 +25,6 @@ Zawartość tego folderu należy skopiować do istniejącego projektu, zachowuj�
 ## Ważne uwagi
 
 - Kod zakłada samodzielne komponenty Angular (`standalone`) i obsługę składni `@if`/`@for` (Angular 17+).
-- Efekt zoomu i karuzela są napisane bez dodatkowych zależności, żeby nie wprowadzać konfliktu wersji. W npm istnieją m.in. `ngx-owl-carousel-o` i `@ngu/carousel`, ale wersję biblioteki należy dobrać do wersji Angulara w `package.json`. `ngx-image-zoom` jest starszym pakietem i jego opis podaje testy dla Angulara 15, więc nie został automatycznie dodany.
+- Karuzela jest napisana bez dodatkowych zależności, żeby nie wprowadzać konfliktu wersji. W npm istnieją m.in. `ngx-owl-carousel-o` i `@ngu/carousel`, ale wersję biblioteki należy dobrać do wersji Angulara w `package.json`.
 - To demonstracja szkolna — nie integruje prawdziwej bramki płatniczej ani nie wysyła danych na serwer. Nie wpisuj prawdziwych danych karty ani kodów BLIK.
 - Nie mogłem uruchomić kompilacji w Twoim repozytorium, ponieważ w tym środowisku nie udało się pobrać plików GitHuba. Po wgraniu patcha najważniejszy test to `ng serve`; jeśli kompilator zgłosi błąd, prześlij pełny komunikat.

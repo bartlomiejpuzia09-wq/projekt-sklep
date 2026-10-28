@@ -1,0 +1,83 @@
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+  color: #1f1f1f;
+  background: #f7f3ee;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e8dfd4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.brand {
+  color: #1f1f1f;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.brand span {
+  color: #6b8e23;
+}
+
+nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+nav a {
+  color: #4a4a4a;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+nav a.active {
+  color: #6b8e23;
+}
+
+.cart-trigger {
+  border: 1px solid #dfe7d2;
+  background: #f5f9ef;
+  color: #2f2f2f;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.cart-count {
+  display: inline-block;
+  min-width: 1.2rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: #dfe9c8;
+  color: #1f1f1f;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.page-shell {
+  padding: 1.5rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.2);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.cart-modal {
+  width: min(420px, 100%);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+}

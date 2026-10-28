@@ -1,6 +1,5 @@
 <section class="hero">
   <div>
-    <p class="eyebrow">TECHNOLOGIA NA CO DZIEŃ</p>
     <h1>Sprzęt, który ułatwia <span>pracę i naukę.</span></h1>
     <p class="hero-copy">
       Wybierz akcesoria komputerowe do swojego stanowiska. Zobacz szczegóły produktu i dodaj wybrane
@@ -8,7 +7,6 @@
     </p>
     <a class="primary-link" href="#produkty">Zobacz produkty</a>
   </div>
-  <div class="hero-art" aria-hidden="true"><span>⌘</span><span>⌁</span><span>▣</span></div>
 </section>
 
 <section id="produkty" class="products-section">
@@ -22,12 +20,6 @@
   <div class="products-grid">
     @for (product of products; track product.id) {
       <article class="product-card">
-        <a
-          class="image-link"
-          [routerLink]="['/product', product.id]"
-          [attr.aria-label]="'Zobacz produkt: ' + product.name"
-        >
-        </a>
         <div class="product-info">
           <div class="rating">
             <span>★</span> {{ product.rating }}
