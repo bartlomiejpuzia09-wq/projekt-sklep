@@ -32,14 +32,16 @@ export class ProductPageComponent implements OnInit {
 
   get visibleProducts(): Product[] {
     if (this.otherProducts.length <= 3) return this.otherProducts;
-    return Array.from({ length: 3 }, (_, index) =>
-      this.otherProducts[(this.carouselIndex + index) % this.otherProducts.length],
+    return Array.from(
+      { length: 3 },
+      (_, index) => this.otherProducts[(this.carouselIndex + index) % this.otherProducts.length],
     );
   }
 
   previous(): void {
     if (this.otherProducts.length) {
-      this.carouselIndex = (this.carouselIndex - 1 + this.otherProducts.length) % this.otherProducts.length;
+      this.carouselIndex =
+        (this.carouselIndex - 1 + this.otherProducts.length) % this.otherProducts.length;
     }
   }
 

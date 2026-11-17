@@ -1,13 +1,7 @@
 <div class="cart-heading">
   <div>
     <p class="eyebrow">TWOJE ZAKUPY</p>
-    <h1>{{ modal ? 'Podgląd koszyka' : 'Koszyk' }}</h1>
   </div>
-  @if (modal) {
-    <button type="button" class="close-button" aria-label="Zamknij koszyk" (click)="close()">
-      ×
-    </button>
-  }
 </div>
 
 @if (items.length === 0) {

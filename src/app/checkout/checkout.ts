@@ -57,7 +57,17 @@ export class CheckoutComponent {
     card.updateValueAndValidity({ emitEvent: false });
   }
 
-  fieldInvalid(name: 'firstName' | 'lastName' | 'email' | 'street' | 'postalCode' | 'city' | 'blikCode' | 'cardNumber'): boolean {
+  fieldInvalid(
+    name:
+      | 'firstName'
+      | 'lastName'
+      | 'email'
+      | 'street'
+      | 'postalCode'
+      | 'city'
+      | 'blikCode'
+      | 'cardNumber',
+  ): boolean {
     const control = this.paymentForm.controls[name];
     return control.invalid && (control.dirty || control.touched);
   }
@@ -73,12 +83,6 @@ export class CheckoutComponent {
     if (this.paymentForm.invalid) return;
 
     this.sending = true;
-    // Symulacja odpowiedzi serwera: około 1 na 10 prób kończy się błędem.
-    if (Math.random() < 0.1) {
-      this.submitError = 'Nie udało się przetworzyć zamówienia. Twoje produkty nadal są w koszyku — spróbuj ponownie.';
-      this.sending = false;
-      return;
-    }
 
     const value = this.paymentForm.getRawValue();
     this.shop.completeOrder({
